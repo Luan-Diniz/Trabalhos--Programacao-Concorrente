@@ -50,12 +50,14 @@ class PaymentProcessor(Thread):
             try:
                 banks[self.bank._id].semaforo_transactions.acquire()
                 with banks[self.bank._id].queue_lock:
-                    transaction = queue.pop(0)
+                    if len(queue) != 0:
+                        transaction = queue.pop(0)
             
             except Exception as err:
                 LOGGER.error(f"Falha em PaymentProcessor.run(): {err}")
             else:
-                self.process_transaction(transaction)
+                if banks[self.bank._id].operating:
+                    self.process_transaction(transaction)
 
 
         LOGGER.info(f"O PaymentProcessor {self._id} do banco {self.bank._id} foi finalizado.")

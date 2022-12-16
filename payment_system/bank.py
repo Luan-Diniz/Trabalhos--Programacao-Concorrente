@@ -210,7 +210,7 @@ class Bank():
             self.mutex_account.release()
             
             self.protect_variables.acquire()
-            self.n_nat_transfers += 1
+            
             self.transactions_total_time += transaction.get_processing_time().total_seconds()
             self.protect_variables.release()
 
@@ -239,7 +239,7 @@ class Bank():
 
         if self.currency == 1:
             depositar_taxas = self.reserves.USD.deposit
-            retirar_reserva = self.reserves.USD.withdraw
+ 
         elif self.currency == 2:
             depositar_taxas = self.reserves.EUR.deposit
 
@@ -304,7 +304,7 @@ class Bank():
             self.mutex_account.release()
 
             self.protect_variables.acquire()
-            self.n_inter_transfers += 1
+           
             self.transactions_total_time += transaction.get_processing_time().total_seconds()
             self.protect_variables.release()
 
